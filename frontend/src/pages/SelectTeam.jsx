@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PageHeader from '../components/PageHeader';
 
 const DEFAULT_CATEGORIES = [
   { key: 'cat1', icon: 'gavel', defaultName: 'HR Policy' },
@@ -29,33 +30,22 @@ const SelectTeam = () => {
 
   const saveEdit = (key) => {
     const trimmed = editValue.trim() || categories.find(c => c.key === key).defaultName;
-    // Save to localStorage
     localStorage.setItem(`categoryName_${key}`, trimmed);
-    // Update state
     setCategories(prev => prev.map(c => c.key === key ? { ...c, name: trimmed } : c));
     setEditingKey(null);
   };
 
   const handleSelect = (cat) => {
-    if (editingKey) return; // don't navigate if editing
-    // Save the ORIGINAL defaultName for filtering questions (not display name)
+    if (editingKey) return;
     localStorage.setItem('selectedCategory', cat.defaultName);
-    // Save display name separately for showing in the header
     localStorage.setItem('selectedCategoryDisplay', cat.name);
     navigate('/hr/questions');
   };
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#fff' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--card)' }}>
 
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '24px 20px 10px' }}>
-        <button onClick={() => navigate(-1)}
-          style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#E3F2FD', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
-          <span className="msy" style={{ fontSize: '15px', color: '#1565C0' }}>arrow_back</span>
-        </button>
-        <span style={{ fontSize: '17px', fontWeight: '700', color: '#1A1C1E' }}>Select Team</span>
-      </div>
+      <PageHeader title="Choose Title" />
 
       {/* Category Buttons */}
       <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -64,8 +54,8 @@ const SelectTeam = () => {
             key={cat.key}
             onClick={() => handleSelect(cat)}
             style={{
-              background: '#E3F2FD',
-              border: '1px solid #90CAF9',
+              background: 'var(--wide-bg)',
+              border: '1px solid var(--wide-border)',
               borderRadius: '18px',
               padding: '28px 20px',
               display: 'flex',
@@ -82,7 +72,7 @@ const SelectTeam = () => {
             }}
           >
             {/* Icon */}
-            <span className="msy" style={{ fontSize: '30px', color: '#1565C0' }}>{cat.icon}</span>
+            <span className="msy" style={{ fontSize: '30px', color: 'var(--blue)' }}>{cat.icon}</span>
 
             {/* Editable Name */}
             {editingKey === cat.key ? (
@@ -99,18 +89,18 @@ const SelectTeam = () => {
                 onClick={e => e.stopPropagation()}
                 style={{
                   border: 'none',
-                  borderBottom: '2px solid #1565C0',
+                  borderBottom: '2px solid var(--blue)',
                   outline: 'none',
                   fontSize: '15px',
                   fontWeight: '700',
-                  color: '#0D47A1',
+                  color: 'var(--wide-text)',
                   background: 'transparent',
                   textAlign: 'center',
                   width: '160px',
                 }}
               />
             ) : (
-              <span style={{ fontSize: '15px', fontWeight: '700', color: '#0D47A1' }}>
+              <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--wide-text)' }}>
                 {cat.name}
               </span>
             )}
@@ -123,7 +113,7 @@ const SelectTeam = () => {
                 background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
               }}
             >
-              <span className="msy" style={{ fontSize: '18px', color: editingKey === cat.key ? '#2E7D32' : '#90CAF9' }}>
+              <span className="msy" style={{ fontSize: '18px', color: editingKey === cat.key ? 'var(--green)' : 'var(--blue-mid)' }}>
                 {editingKey === cat.key ? 'check_circle' : 'edit'}
               </span>
             </button>

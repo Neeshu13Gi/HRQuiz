@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import API from '../api';
+import PageHeader from '../components/PageHeader';
 
 const EditQuestion = () => {
   const navigate = useNavigate();
@@ -66,42 +67,35 @@ const EditQuestion = () => {
   };
 
   if (loading) return (
-    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <p style={{ color: '#9E9E9E' }}>Loading...</p>
+    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--card)' }}>
+      <p style={{ color: 'var(--label)' }}>Loading...</p>
     </div>
   );
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#fff' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--card)' }}>
 
-      {/* ── Header ── */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '24px 20px 0' }}>
-        <button onClick={() => navigate(-1)}
-          style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#E3F2FD', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
-          <span className="msy" style={{ fontSize: '15px', color: '#1565C0' }}>arrow_back</span>
-        </button>
-        <span style={{ fontSize: '17px', fontWeight: '700', color: '#1A1C1E' }}>Edit Question</span>
-      </div>
+      <PageHeader title="Edit Question" />
 
       {/* ── Form ── */}
       <div style={{ padding: '24px 20px 30px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, overflowY: 'auto' }}>
 
         {/* Question Title */}
         <div>
-          <label style={{ fontSize: '12px', color: '#5F6368', display: 'block', marginBottom: '8px' }}>Question Title</label>
+          <label style={{ fontSize: '12px', color: 'var(--sub)', display: 'block', marginBottom: '8px' }}>Question Title</label>
           <input
             type="text"
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="Enter question..."
-            style={{ width: '100%', padding: '13px 16px', border: '1.5px solid #1565C0', borderRadius: '10px', fontSize: '13px', color: '#1A1C1E', outline: 'none' }}
+            style={{ width: '100%', padding: '13px 16px', border: '1.5px solid var(--blue)', borderRadius: '10px', fontSize: '13px', color: 'var(--text)', outline: 'none', background: 'var(--input-bg)' }}
           />
         </div>
 
         {/* Options with radio for correct answer */}
         <div>
-          <label style={{ fontSize: '12px', color: '#5F6368', display: 'block', marginBottom: '12px' }}>
-            Options — tap <span style={{ color: '#1565C0', fontWeight: '700' }}>●</span> to mark correct answer
+          <label style={{ fontSize: '12px', color: 'var(--sub)', display: 'block', marginBottom: '12px' }}>
+            Options — tap <span style={{ color: 'var(--blue)', fontWeight: '700' }}>●</span> to mark correct answer
           </label>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -114,8 +108,8 @@ const EditQuestion = () => {
                     onClick={() => opt.trim() && setCorrectAnswer(opt)}
                     style={{
                       width: '20px', height: '20px', borderRadius: '50%',
-                      border: `2px solid ${isCorrect ? '#1565C0' : '#90CAF9'}`,
-                      background: isCorrect ? '#1565C0' : '#fff',
+                      border: `2px solid ${isCorrect ? 'var(--blue)' : 'var(--blue-mid)'}`,
+                      background: isCorrect ? 'var(--blue)' : 'var(--input-bg)',
                       flexShrink: 0, cursor: 'pointer', transition: 'all 0.2s',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}
@@ -130,9 +124,9 @@ const EditQuestion = () => {
                     onChange={e => handleOptionChange(index, e.target.value)}
                     style={{
                       flex: 1, padding: '12px 14px',
-                      border: `1.5px solid ${isCorrect ? '#1565C0' : '#E4E7EC'}`,
-                      borderRadius: '10px', fontSize: '13px', color: '#1A1C1E', outline: 'none',
-                      background: isCorrect ? '#E3F2FD' : '#fff',
+                      border: `1.5px solid ${isCorrect ? 'var(--blue)' : 'var(--border)'}`,
+                      borderRadius: '10px', fontSize: '13px', color: 'var(--text)', outline: 'none',
+                      background: isCorrect ? 'var(--blue-light)' : 'var(--input-bg)',
                       transition: 'all 0.2s',
                     }}
                   />
@@ -144,7 +138,7 @@ const EditQuestion = () => {
 
         {/* Save message */}
         {saveMsg && (
-          <p style={{ fontSize: '13px', color: saveMsg.startsWith('✓') ? '#2E7D32' : '#D32F2F', fontWeight: '600', textAlign: 'center' }}>
+          <p style={{ fontSize: '13px', color: saveMsg.startsWith('✓') ? 'var(--green)' : 'var(--red)', fontWeight: '600', textAlign: 'center' }}>
             {saveMsg}
           </p>
         )}
@@ -155,7 +149,7 @@ const EditQuestion = () => {
           disabled={saving}
           style={{
             width: '100%', padding: '15px',
-            background: saving ? '#90CAF9' : '#1565C0',
+            background: saving ? 'var(--blue-mid)' : 'var(--blue)',
             border: 'none', borderRadius: '12px', color: '#fff',
             fontSize: '15px', fontWeight: '700',
             cursor: saving ? 'not-allowed' : 'pointer',

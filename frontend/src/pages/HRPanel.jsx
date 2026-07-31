@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import PageHeader from '../components/PageHeader';
 
 const HRPanel = () => {
   const navigate = useNavigate();
@@ -10,32 +11,27 @@ const HRPanel = () => {
   };
 
   return (
-    <div className="page-container">
-      <div className="app-header">
-        <button className="back" onClick={() => navigate(-1)}>
-          <span className="msy">arrow_back</span>
-        </button>
-        <div className="title">HR Panel</div>
-      </div>
-      
-      <div style={{ marginTop: '10px' }}>
-        <button 
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--card)' }}>
+      <PageHeader title="Customize Quiz" />
+
+      <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '0' }}>
+        <button
           className="wide-btn animate-popup" style={{ animationDelay: '0.1s', opacity: 0 }}
           onClick={() => handleSelectCount(5)}
         >
           <span className="msy">looks_5</span>
           <span>5 Questions</span>
         </button>
-        
-        <button 
+
+        <button
           className="wide-btn animate-popup" style={{ animationDelay: '0.2s', opacity: 0 }}
           onClick={() => handleSelectCount(10)}
         >
           <span className="msy">filter_5</span>
           <span>10 Questions</span>
         </button>
-        
-        <button 
+
+        <button
           className="wide-btn animate-popup" style={{ animationDelay: '0.3s', opacity: 0 }}
           onClick={() => handleSelectCount(15)}
         >

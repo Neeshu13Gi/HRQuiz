@@ -1,31 +1,115 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Material+Symbols+Rounded&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Rounded&display=swap');
 
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────── */
 @keyframes popup {
-  0% { transform: scale(0.85) translateY(16px); opacity: 0; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
+  0%   { transform: scale(0.85) translateY(16px); opacity: 0; }
+  100% { transform: scale(1)    translateY(0);     opacity: 1; }
+}
+@keyframes floatDot {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
 }
 
 .animate-popup {
   animation: popup 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-:root {
-  --blue: #1565C0;
-  --blue-dark: #0D47A1;
-  --blue-light: #E1F0FF; /* Slightly lighter blue for the button background */
-  --blue-mid: #90CAF9;
-  --bg: #F5F7FA;
-  --white: #FFFFFF;
-  --text: #1A1C1E;
-  --sub: #5F6368;
-  --border: #E4E7EC;
-  --gold: #FFC107;
-  --silver: #B0BEC5;
-  --bronze: #D7A86E;
-  --green: #2E7D32;
-  --red: #D32F2F;
+/* ─────────────────────────────────────────────
+   LIGHT THEME  (default — clean professional)
+───────────────────────────────────────────── */
+:root,
+#root.theme-light {
+  /* Brand */
+  --blue:       #4F46E5;          /* Indigo 600 */
+  --blue-dark:  #3730A3;          /* Indigo 800 */
+  --blue-light: #EEF2FF;          /* Indigo 50 */
+  --blue-mid:   #A5B4FC;          /* Indigo 300 */
+
+  /* Shell */
+  --bg:         #FFFFFF;
+  --card:       #FFFFFF;
+  --card-border:rgba(79,70,229,0.08);
+
+  /* Text */
+  --text:       #0F172A;          /* Slate 900 */
+  --sub:        #64748B;          /* Slate 500 */
+  --label:      #94A3B8;          /* Slate 400 */
+
+  /* Chrome */
+  --border:     #E2E8F0;          /* Slate 200 */
+  --input-bg:   #F8FAFC;          /* Slate 50 */
+  --back-btn-bg:#EEF2FF;
+
+  /* Wide btn */
+  --wide-bg:    #EEF2FF;
+  --wide-border:#C7D2FE;
+  --wide-text:  #3730A3;
+
+  /* Q card */
+  --qcard-bg:   #FFFFFF;
+
+  /* Status */
+  --gold:   #F59E0B;
+  --silver: #94A3B8;
+  --bronze: #D97706;
+  --green:  #10B981;
+  --red:    #EF4444;
+
+  /* Home decorative dots */
+  --dot-color: #C7D2FE;
+  --hero-grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
 }
 
+/* ─────────────────────────────────────────────
+   DARK THEME  (professional charcoal)
+───────────────────────────────────────────── */
+#root.theme-dark {
+  /* Brand — brighter accent for visibility on dark */
+  --blue:       #818CF8;          /* Indigo 400 */
+  --blue-dark:  #A5B4FC;          /* Indigo 300 */
+  --blue-light: #1E1B4B;          /* very dark indigo */
+  --blue-mid:   #3730A3;          /* Indigo 800 */
+
+  /* Shell */
+  --bg:         #FFFFFF;          /* outer body stays white */
+  --card:       #0F0F1A;          /* near-black card */
+  --card-border:rgba(129,140,248,0.10);
+
+  /* Text */
+  --text:       #F1F5F9;          /* Slate 100 */
+  --sub:        #94A3B8;          /* Slate 400 */
+  --label:      #64748B;          /* Slate 500 */
+
+  /* Chrome */
+  --border:     #1E293B;          /* Slate 800 */
+  --input-bg:   #1E293B;
+  --back-btn-bg:#1E1B4B;
+
+  /* Wide btn */
+  --wide-bg:    #1E1B4B;
+  --wide-border:#3730A3;
+  --wide-text:  #A5B4FC;
+
+  /* Q card */
+  --qcard-bg:   #1E293B;
+
+  /* Status */
+  --gold:   #FBBF24;
+  --silver: #94A3B8;
+  --bronze: #D97706;
+  --green:  #34D399;
+  --red:    #F87171;
+
+  /* Home decorative */
+  --dot-color: #3730A3;
+  --hero-grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+}
+
+/* ─────────────────────────────────────────────
+   GLOBAL RESET
+───────────────────────────────────────────── */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,8 +117,8 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background: #e0e0e0;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  background: #FFFFFF;
   color: var(--text);
   display: flex;
   justify-content: center;
@@ -42,26 +126,31 @@ body {
   min-height: 100vh;
 }
 
+/* ─────────────────────────────────────────────
+   APP SHELL
+───────────────────────────────────────────── */
 #root {
   width: 100vw;
   max-width: 480px;
   height: 100vh;
   max-height: 853px;
-  background: var(--white);
-  box-shadow: 0 8px 20px rgba(15,23,42,0.10);
+  background: var(--card);
+  box-shadow: 0 8px 40px rgba(15,23,42,0.14);
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 @media (max-width: 480px) {
-  #root {
-    max-height: 100vh;
-  }
+  #root { max-height: 100vh; }
 }
 
+/* ─────────────────────────────────────────────
+   MATERIAL SYMBOLS
+───────────────────────────────────────────── */
 .msy {
   font-family: 'Material Symbols Rounded';
   font-weight: 400;
@@ -71,14 +160,20 @@ body {
   vertical-align: middle;
 }
 
+/* ─────────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────────── */
 .page-container {
   flex: 1;
   padding: 24px;
   display: flex;
   flex-direction: column;
+  background: var(--card);
 }
 
-/* Shared Elements */
+/* ─────────────────────────────────────────────
+   SHARED ELEMENTS
+───────────────────────────────────────────── */
 .app-header {
   display: flex;
   align-items: center;
@@ -86,18 +181,16 @@ body {
   padding: 10px 0 30px;
 }
 .app-header .back {
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   border-radius: 50%;
-  background: var(--blue-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--back-btn-bg);
+  display: flex; align-items: center; justify-content: center;
   color: var(--blue);
-  cursor: pointer;
-  border: none;
+  cursor: pointer; border: none;
 }
-.app-header .title { font-size: 18px; font-weight: 700; color: var(--text); }
+.app-header .title {
+  font-size: 18px; font-weight: 700; color: var(--text);
+}
 
 .btn-primary {
   background: var(--blue);
@@ -108,16 +201,15 @@ body {
   font-size: 11px;
   font-weight: 700;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(21,101,192,.28);
+  box-shadow: 0 4px 8px rgba(79,70,229,.28);
   cursor: pointer;
   width: 100%;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Big Image-like Buttons (HR Panel / Select Team) */
 .wide-btn {
-  background: var(--blue-light);
-  border: 1px solid var(--blue-mid);
+  background: var(--wide-bg);
+  border: 1px solid var(--wide-border);
   border-radius: 16px;
   width: 100%;
   padding: 30px 20px;
@@ -126,24 +218,18 @@ body {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  color: var(--blue-dark);
+  color: var(--wide-text);
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
   margin-bottom: 20px;
   transition: transform 0.2s;
 }
-.wide-btn:active {
-  transform: scale(0.98);
-}
-.wide-btn .msy {
-  font-size: 32px;
-  color: var(--blue);
-}
+.wide-btn:active { transform: scale(0.98); }
+.wide-btn .msy  { font-size: 32px; color: var(--blue); }
 
-/* Question List */
 .q-card {
-  background: #fff;
+  background: var(--qcard-bg);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px 20px;
@@ -153,27 +239,61 @@ body {
   justify-content: space-between;
   margin-bottom: 16px;
 }
-.q-card-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.q-card .qtext { font-size: 14px; color: var(--sub); }
-.q-card .qnum { font-size: 15px; font-weight: 700; color: var(--blue-dark); }
-.q-card .edit { color: var(--blue); font-size: 20px; cursor: pointer; }
+.q-card-content { display: flex; flex-direction: column; gap: 4px; }
+.q-card .qtext  { font-size: 14px; color: var(--sub); }
+.q-card .qnum   { font-size: 15px; font-weight: 700; color: var(--blue-dark); }
+.q-card .edit   { color: var(--blue); font-size: 20px; cursor: pointer; }
 
 .fab {
-  position: absolute; bottom: 30px; right: 30px; width: 56px; height: 56px; border-radius: 50%;
-  background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 6px 16px rgba(21,101,192,.4); font-size: 28px; cursor: pointer; border: none;
+  position: absolute; bottom: 30px; right: 30px;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 16px rgba(79,70,229,.45);
+  font-size: 28px; cursor: pointer; border: none;
 }
 
-/* Animations */
-@keyframes popup {
-  0% { transform: scale(0.95) translateY(10px); opacity: 0; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
+/* ─────────────────────────────────────────────
+   THEME SWITCHER  (2-button: Dark | Light)
+───────────────────────────────────────────── */
+.theme-switcher {
+  display: flex;
+  gap: 4px;
+  background: var(--input-bg);
+  border-radius: 50px;
+  padding: 4px;
+  border: 1px solid var(--border);
 }
 
-.animate-popup {
-  animation: popup 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.theme-btn {
+  border: none;
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  background: transparent;
+  color: var(--sub);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: inherit;
+}
+
+.theme-btn.active {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(79,70,229,0.35);
+}
+
+/* ─────────────────────────────────────────────
+   INPUT GLOBAL
+───────────────────────────────────────────── */
+input, textarea, select {
+  background: var(--input-bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }

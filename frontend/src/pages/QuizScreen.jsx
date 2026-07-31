@@ -111,9 +111,9 @@ const QuizScreen = () => {
   // Loading state
   if (loading) {
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '12px' }}>
-        <span className="msy" style={{ fontSize: '40px', color: '#90CAF9' }}>hourglass_top</span>
-        <p style={{ color: '#9E9E9E', fontSize: '14px' }}>Loading questions...</p>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '12px', background: 'var(--card)' }}>
+        <span className="msy" style={{ fontSize: '40px', color: 'var(--blue-mid)' }}>hourglass_top</span>
+        <p style={{ color: 'var(--label)', fontSize: '14px' }}>Loading questions...</p>
       </div>
     );
   }
@@ -121,19 +121,19 @@ const QuizScreen = () => {
   // Error state
   if (error || questions.length === 0) {
     return (
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', textAlign: 'center' }}>
-        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#FFF3E0', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', textAlign: 'center', background: 'var(--card)' }}>
+        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,143,0,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
           <span className="msy" style={{ fontSize: '42px', color: '#FF8F00' }}>info</span>
         </div>
-        <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#1A1C1E', marginBottom: '10px' }}>
+        <h3 style={{ fontSize: '17px', fontWeight: '700', color: 'var(--text)', marginBottom: '10px' }}>
           Koi Question Nahi Mila
         </h3>
-        <p style={{ fontSize: '13px', color: '#9E9E9E', lineHeight: '1.6', marginBottom: '32px', whiteSpace: 'pre-line' }}>
+        <p style={{ fontSize: '13px', color: 'var(--label)', lineHeight: '1.6', marginBottom: '32px', whiteSpace: 'pre-line' }}>
           {error || 'HR ne abhi koi question add nahi kiya hai.'}
         </p>
         <button
           onClick={() => navigate('/')}
-          style={{ padding: '13px 32px', background: '#1565C0', border: 'none', borderRadius: '12px', color: '#fff', fontWeight: '700', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(21,101,192,0.3)' }}
+          style={{ padding: '13px 32px', background: 'var(--blue)', border: 'none', borderRadius: '12px', color: '#fff', fontWeight: '700', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(21,101,192,0.3)' }}
         >
           Home Jao
         </button>
@@ -144,27 +144,27 @@ const QuizScreen = () => {
   // ── Ready Screen (before timer starts) ──
   if (!quizStarted) {
     return (
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#fff', padding: '32px' }}>
-        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#E3F2FD', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-          <span className="msy" style={{ fontSize: '42px', color: '#1565C0' }}>quiz</span>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--card)', padding: '32px' }}>
+        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--blue-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+          <span className="msy" style={{ fontSize: '42px', color: 'var(--blue)' }}>quiz</span>
         </div>
-        <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#1A1C1E', marginBottom: '6px' }}>Ready, {player.name}?</h2>
-        <p style={{ fontSize: '13px', color: '#9E9E9E', marginBottom: '28px' }}>{questions.length} Questions · {TIMER_SECONDS}s per question</p>
+        <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text)', marginBottom: '6px' }}>Ready, {player.name}?</h2>
+        <p style={{ fontSize: '13px', color: 'var(--label)', marginBottom: '28px' }}>{questions.length} Questions · {TIMER_SECONDS}s per question</p>
 
-        <div style={{ width: '100%', background: '#F5F7FA', borderRadius: '14px', padding: '16px', marginBottom: '32px' }}>
+        <div style={{ width: '100%', background: 'var(--input-bg)', borderRadius: '14px', padding: '16px', marginBottom: '32px', border: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <span style={{ fontSize: '13px', color: '#5F6368' }}>Player</span>
-            <span style={{ fontSize: '13px', fontWeight: '700', color: '#1A1C1E' }}>{player.name}</span>
+            <span style={{ fontSize: '13px', color: 'var(--sub)' }}>Player</span>
+            <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text)' }}>{player.name}</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '13px', color: '#5F6368' }}>Employee ID</span>
-            <span style={{ fontSize: '13px', fontWeight: '700', color: '#1A1C1E' }}>{player.empId}</span>
+            <span style={{ fontSize: '13px', color: 'var(--sub)' }}>Employee ID</span>
+            <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text)' }}>{player.empId}</span>
           </div>
         </div>
 
         <button
           onClick={startQuiz}
-          style={{ width: '100%', padding: '16px', background: '#1565C0', border: 'none', borderRadius: '14px', color: '#fff', fontSize: '16px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 6px 20px rgba(21,101,192,0.35)' }}
+          style={{ width: '100%', padding: '16px', background: 'var(--blue)', border: 'none', borderRadius: '14px', color: '#fff', fontSize: '16px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 6px 20px rgba(21,101,192,0.35)' }}
         >
           Start Quiz →
         </button>
@@ -176,26 +176,26 @@ const QuizScreen = () => {
   const progress = ((currentIdx + 1) / questions.length) * 100;
   const circumference = 2 * Math.PI * 28;
   const dashOffset = circumference * (1 - timeLeft / TIMER_SECONDS);
-  const timerColor = timeLeft <= 10 ? '#D32F2F' : '#1565C0';
+  const timerColor = timeLeft <= 10 ? 'var(--red)' : 'var(--blue)';
 
   // ── Quiz Playing Screen ──
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: showTimeUp ? '#9E9E9E' : '#fff', position: 'relative' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: showTimeUp ? 'var(--sub)' : 'var(--card)', position: 'relative' }}>
       {!showTimeUp ? (
         <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
           {/* Top Bar */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#E3F2FD', color: '#1565C0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: '700' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--blue-light)', color: 'var(--blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: '700' }}>
               {initials}
             </div>
-            <span style={{ fontSize: '14px', fontWeight: '700', color: '#1A1C1E' }}>{player.name}</span>
-            <span className="msy" style={{ fontSize: '20px', color: '#9E9E9E' }}>more_horiz</span>
+            <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text)' }}>{player.name}</span>
+            <span className="msy" style={{ fontSize: '20px', color: 'var(--sub)' }}>more_horiz</span>
           </div>
 
           {/* Circular Timer */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '6px' }}>
             <svg width="72" height="72">
-              <circle cx="36" cy="36" r="28" fill="none" stroke="#E3F2FD" strokeWidth="5" />
+              <circle cx="36" cy="36" r="28" fill="none" stroke="var(--blue-light)" strokeWidth="5" />
               <circle cx="36" cy="36" r="28" fill="none" stroke={timerColor} strokeWidth="5"
                 strokeDasharray={circumference} strokeDashoffset={dashOffset}
                 strokeLinecap="round" transform="rotate(-90 36 36)"
@@ -206,29 +206,29 @@ const QuizScreen = () => {
             </svg>
           </div>
 
-          <p style={{ fontSize: '11px', color: '#9E9E9E', textAlign: 'center', marginBottom: '8px' }}>
+          <p style={{ fontSize: '11px', color: 'var(--label)', textAlign: 'center', marginBottom: '8px' }}>
             Question {currentIdx + 1} of {questions.length}
           </p>
 
           {/* Progress Bar */}
-          <div style={{ height: '5px', background: '#E3F2FD', borderRadius: '10px', marginBottom: '16px' }}>
-            <div style={{ height: '100%', width: `${progress}%`, background: '#1565C0', borderRadius: '10px', transition: 'width 0.4s' }} />
+          <div style={{ height: '5px', background: 'var(--blue-light)', borderRadius: '10px', marginBottom: '16px' }}>
+            <div style={{ height: '100%', width: `${progress}%`, background: 'var(--blue)', borderRadius: '10px', transition: 'width 0.4s' }} />
           </div>
 
           {/* Question Card */}
-          <div style={{ background: '#fff', border: '1px solid #E4E7EC', borderRadius: '12px', padding: '16px', marginBottom: '14px', boxShadow: '0 2px 6px rgba(0,0,0,0.04)' }}>
-            <p style={{ fontSize: '14px', fontWeight: '600', color: '#1A1C1E', lineHeight: '1.6' }}>{currentQ.title}</p>
+          <div style={{ background: 'var(--qcard-bg)', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px', marginBottom: '14px', boxShadow: '0 2px 6px rgba(0,0,0,0.04)' }}>
+            <p style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text)', lineHeight: '1.6' }}>{currentQ.title}</p>
           </div>
 
           {/* Answer Options */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {currentQ.options.map((opt, idx) => (
               <button key={idx} onClick={() => handleAnswer(opt)}
-                style={{ width: '100%', background: '#fff', border: '1.5px solid #E4E7EC', borderRadius: '12px', padding: '14px 16px', fontSize: '13px', textAlign: 'left', color: '#1A1C1E', cursor: 'pointer', fontWeight: '500', transition: 'all 0.15s' }}
-                onMouseDown={e => { e.currentTarget.style.background = '#E3F2FD'; e.currentTarget.style.borderColor = '#90CAF9'; }}
-                onMouseUp={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#E4E7EC'; }}
+                style={{ width: '100%', background: 'var(--qcard-bg)', border: '1.5px solid var(--border)', borderRadius: '12px', padding: '14px 16px', fontSize: '13px', textAlign: 'left', color: 'var(--text)', cursor: 'pointer', fontWeight: '500', transition: 'all 0.15s' }}
+                onMouseDown={e => { e.currentTarget.style.background = 'var(--blue-light)'; e.currentTarget.style.borderColor = 'var(--blue-mid)'; }}
+                onMouseUp={e => { e.currentTarget.style.background = 'var(--qcard-bg)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
               >
-                <span style={{ color: '#1565C0', fontWeight: '700', marginRight: '10px' }}>{String.fromCharCode(65 + idx)}.</span>{opt}
+                <span style={{ color: 'var(--blue)', fontWeight: '700', marginRight: '10px' }}>{String.fromCharCode(65 + idx)}.</span>{opt}
               </button>
             ))}
           </div>
@@ -236,14 +236,14 @@ const QuizScreen = () => {
       ) : (
         /* Time Up Dialog */
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
-          <div className="animate-popup" style={{ background: '#fff', borderRadius: '20px', width: '84%', padding: '28px 24px', textAlign: 'center', boxShadow: '0 16px 40px rgba(0,0,0,0.25)' }}>
-            <span className="msy" style={{ fontSize: '48px', color: '#1565C0' }}>timer_off</span>
-            <h4 style={{ fontSize: '18px', fontWeight: '700', margin: '12px 0 6px', color: '#1A1C1E' }}>Time's up!</h4>
-            <p style={{ fontSize: '13px', color: '#2E7D32', fontWeight: '700', marginBottom: '22px' }}>
+          <div className="animate-popup" style={{ background: 'var(--card)', borderRadius: '20px', width: '84%', padding: '28px 24px', textAlign: 'center', boxShadow: '0 16px 40px rgba(0,0,0,0.25)' }}>
+            <span className="msy" style={{ fontSize: '48px', color: 'var(--blue)' }}>timer_off</span>
+            <h4 style={{ fontSize: '18px', fontWeight: '700', margin: '12px 0 6px', color: 'var(--text)' }}>Time's up!</h4>
+            <p style={{ fontSize: '13px', color: 'var(--green)', fontWeight: '700', marginBottom: '22px' }}>
               Correct answer: {currentQ.correctAnswer}
             </p>
             <button onClick={goNext}
-              style={{ width: '100%', padding: '14px', background: '#1565C0', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 4px 14px rgba(21,101,192,0.3)' }}>
+              style={{ width: '100%', padding: '14px', background: 'var(--blue)', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 4px 14px rgba(21,101,192,0.3)' }}>
               Next question
             </button>
           </div>
