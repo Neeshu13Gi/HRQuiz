@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
+import { playClick, playTick } from '../audio';
 
-const TIMER_SECONDS = 30;
+const TIMER_SECONDS = 10;
 
 const QuizScreen = () => {
   const navigate = useNavigate();
@@ -10,7 +11,6 @@ const QuizScreen = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS);
   const [showTimeUp, setShowTimeUp] = useState(false);
-  const [quizStarted, setQuizStarted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -36,35 +36,33 @@ const QuizScreen = () => {
         // Shuffle and pick up to the selected count
         const shuffled = [...res.data].sort(() => Math.random() - 0.5);
         setQuestions(shuffled.slice(0, Math.min(count, shuffled.length)));
+        startTimeRef.current = Date.now();
       } else {
-        setError('HR ne abhi koi question add nahi kiya hai. Pehle HR Panel mein questions add karein.');
+        setError('No Questions');
       }
     } catch (err) {
-      setError('Backend se connect nahi ho paya. Pehle backend server start karein:\ncmd > node server.js');
+      setError('..No Questions..');
     }
     setLoading(false);
   };
 
-  // Timer countdown — only when quiz is started
+  // Timer countdown
   useEffect(() => {
-    if (!quizStarted || showTimeUp || questions.length === 0) return;
+    if (loading || showTimeUp || questions.length === 0) return;
     if (timeLeft > 0) {
-      timerRef.current = setTimeout(() => setTimeLeft(t => t - 1), 1000);
+      timerRef.current = setTimeout(() => {
+        setTimeLeft(t => t - 1);
+        if (timeLeft <= 5) playTick();
+      }, 1000);
       return () => clearTimeout(timerRef.current);
     } else {
       wrongRef.current += 1;
       setShowTimeUp(true);
     }
-  }, [timeLeft, quizStarted, showTimeUp, questions]);
-
-  const startQuiz = () => {
-    startTimeRef.current = Date.now();
-    scoreRef.current = 0;
-    wrongRef.current = 0;
-    setQuizStarted(true);
-  };
+  }, [timeLeft, loading, showTimeUp, questions]);
 
   const handleAnswer = (selectedOpt) => {
+    playClick();
     clearTimeout(timerRef.current);
     if (selectedOpt === questions[currentIdx].correctAnswer) {
       scoreRef.current += 1;
@@ -94,7 +92,7 @@ const QuizScreen = () => {
       localStorage.setItem('quizResult', JSON.stringify(result));
 
       // Save to MongoDB
-      axios.post('http://localhost:5000/api/results', {
+      API.post('/api/results', {
         employeeName: player.name,
         employeeId: player.empId,
         score: scoreRef.current,
@@ -126,47 +124,16 @@ const QuizScreen = () => {
           <span className="msy" style={{ fontSize: '42px', color: '#FF8F00' }}>info</span>
         </div>
         <h3 style={{ fontSize: '17px', fontWeight: '700', color: 'var(--text)', marginBottom: '10px' }}>
-          Koi Question Nahi Mila
+          
         </h3>
         <p style={{ fontSize: '13px', color: 'var(--label)', lineHeight: '1.6', marginBottom: '32px', whiteSpace: 'pre-line' }}>
           {error || 'HR ne abhi koi question add nahi kiya hai.'}
         </p>
         <button
-          onClick={() => navigate('/')}
+          onClick={() => { playClick(); navigate('/'); }}
           style={{ padding: '13px 32px', background: 'var(--blue)', border: 'none', borderRadius: '12px', color: '#fff', fontWeight: '700', fontSize: '14px', cursor: 'pointer', boxShadow: '0 4px 14px rgba(21,101,192,0.3)' }}
         >
-          Home Jao
-        </button>
-      </div>
-    );
-  }
-
-  // ── Ready Screen (before timer starts) ──
-  if (!quizStarted) {
-    return (
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--card)', padding: '32px' }}>
-        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--blue-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-          <span className="msy" style={{ fontSize: '42px', color: 'var(--blue)' }}>quiz</span>
-        </div>
-        <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text)', marginBottom: '6px' }}>Ready, {player.name}?</h2>
-        <p style={{ fontSize: '13px', color: 'var(--label)', marginBottom: '28px' }}>{questions.length} Questions · {TIMER_SECONDS}s per question</p>
-
-        <div style={{ width: '100%', background: 'var(--input-bg)', borderRadius: '14px', padding: '16px', marginBottom: '32px', border: '1px solid var(--border)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <span style={{ fontSize: '13px', color: 'var(--sub)' }}>Player</span>
-            <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text)' }}>{player.name}</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '13px', color: 'var(--sub)' }}>Employee ID</span>
-            <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text)' }}>{player.empId}</span>
-          </div>
-        </div>
-
-        <button
-          onClick={startQuiz}
-          style={{ width: '100%', padding: '16px', background: 'var(--blue)', border: 'none', borderRadius: '14px', color: '#fff', fontSize: '16px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 6px 20px rgba(21,101,192,0.35)' }}
-        >
-          Start Quiz →
+          Home
         </button>
       </div>
     );
@@ -176,7 +143,7 @@ const QuizScreen = () => {
   const progress = ((currentIdx + 1) / questions.length) * 100;
   const circumference = 2 * Math.PI * 28;
   const dashOffset = circumference * (1 - timeLeft / TIMER_SECONDS);
-  const timerColor = timeLeft <= 10 ? 'var(--red)' : 'var(--blue)';
+  const timerColor = timeLeft <= 5 ? '#D32F2F' : '#388E3C'; // Red if <= 5, else Green
 
   // ── Quiz Playing Screen ──
   return (
@@ -195,7 +162,7 @@ const QuizScreen = () => {
           {/* Circular Timer */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '6px' }}>
             <svg width="72" height="72">
-              <circle cx="36" cy="36" r="28" fill="none" stroke="var(--blue-light)" strokeWidth="5" />
+              <circle cx="36" cy="36" r="28" fill="none" stroke="#E8F5E9" strokeWidth="5" />
               <circle cx="36" cy="36" r="28" fill="none" stroke={timerColor} strokeWidth="5"
                 strokeDasharray={circumference} strokeDashoffset={dashOffset}
                 strokeLinecap="round" transform="rotate(-90 36 36)"
@@ -242,7 +209,7 @@ const QuizScreen = () => {
             <p style={{ fontSize: '13px', color: 'var(--green)', fontWeight: '700', marginBottom: '22px' }}>
               Correct answer: {currentQ.correctAnswer}
             </p>
-            <button onClick={goNext}
+            <button onClick={() => { playClick(); goNext(); }}
               style={{ width: '100%', padding: '14px', background: 'var(--blue)', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '14px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 4px 14px rgba(21,101,192,0.3)' }}>
               Next question
             </button>

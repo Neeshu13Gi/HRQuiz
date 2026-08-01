@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
+import { playClick } from '../audio';
 
 /* ── Decorative floating dot ── */
 const Dot = ({ top, left, right, size = 6, delay = 0, opacity = 0.5 }) => (
@@ -65,14 +66,14 @@ const Home = () => {
         <div className="theme-switcher">
           <button
             className={`theme-btn${theme === 'dark' ? ' active' : ''}`}
-            onClick={() => setTheme('dark')}
+            onClick={() => { playClick(); setTheme('dark'); }}
           >
             <span className="msy" style={{ fontSize: '13px' }}>dark_mode</span>
             Dark
           </button>
           <button
             className={`theme-btn${theme === 'light' ? ' active' : ''}`}
-            onClick={() => setTheme('light')}
+            onClick={() => { playClick(); setTheme('light'); }}
           >
             <span className="msy" style={{ fontSize: '13px' }}>light_mode</span>
             Light
@@ -178,7 +179,7 @@ const Home = () => {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', zIndex: 2 }}>
         {/* HR Panel — outline */}
         <button
-          onClick={() => navigate('/hr/panel')}
+          onClick={() => { playClick(); navigate('/hr/panel'); }}
           style={{
             width: '240px',
             padding: '14px 24px',
@@ -204,7 +205,7 @@ const Home = () => {
 
         {/* Start Game — filled */}
         <button
-          onClick={() => navigate('/login')}
+          onClick={() => { playClick(); navigate('/login'); }}
           style={{
             width: '240px',
             padding: '14px 24px',

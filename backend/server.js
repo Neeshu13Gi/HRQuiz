@@ -11,7 +11,7 @@ app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/quiz-challenge';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://neeshu:qNrSkL65bbNqIkZW@neeshu.cwxzomm.mongodb.net/?appName=neeshu';
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))

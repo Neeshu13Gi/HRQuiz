@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { playClick } from '../audio';
 
 /**
  * Shared top header — back button + title.
@@ -23,7 +24,11 @@ const PageHeader = ({ title, onBack }) => {
     }}>
       {/* Back button */}
       <button
-        onClick={onBack ?? (() => navigate(-1))}
+        onClick={() => {
+          playClick();
+          if (onBack) onBack();
+          else navigate(-1);
+        }}
         style={{
           width: '34px',
           height: '34px',

@@ -90,7 +90,7 @@ const QuestionList = () => {
     if (!form.correctAnswer) return setError('Please select the correct answer.');
     setSaving(true);
     try {
-      await axios.post('http://localhost:5000/api/questions', form);
+      await API.post('/api/questions', form);
       setShowModal(false);
       fetchQuestions();
     } catch (e) {
@@ -102,7 +102,7 @@ const QuestionList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this question?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/questions/${id}`);
+      await API.delete(`/api/questions/${id}`);
       fetchQuestions();
     } catch (e) {
       alert('Failed to delete');

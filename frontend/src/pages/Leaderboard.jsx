@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
+import { playClick } from '../audio';
 
 const Leaderboard = () => {
   const navigate = useNavigate();
@@ -84,13 +85,13 @@ const Leaderboard = () => {
       {/* Bottom Buttons: Home (outline) + Play (solid) */}
       <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
         <button
-          onClick={() => navigate('/')}
+          onClick={() => { playClick(); navigate('/'); }}
           style={{ flex: 1, padding: '14px', background: 'var(--input-bg)', border: '1.5px solid var(--blue-mid)', borderRadius: '10px', color: 'var(--blue)', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}
         >
           Home
         </button>
         <button
-          onClick={() => navigate('/login')}
+          onClick={() => { playClick(); navigate('/login'); }}
           style={{ flex: 1, padding: '14px', background: 'var(--blue)', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '14px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 4px 14px rgba(21,101,192,0.3)' }}
         >
           Play
