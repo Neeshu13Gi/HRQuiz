@@ -12,7 +12,6 @@ const QuizComplete = () => {
   useEffect(() => {
     if (!saved.current) {
       saved.current = true;
-      saveResult();
       
       // Play sounds based on score
       if (result.score > 0) {
@@ -22,20 +21,6 @@ const QuizComplete = () => {
       }
     }
   }, []);
-
-  const saveResult = async () => {
-    try {
-      await API.post('/api/results', {
-        employeeName: player.name,
-        employeeId: player.empId,
-        score: result.score,
-        totalQuestions: result.total,
-        timeTaken: result.time,
-      });
-    } catch (e) {
-      console.error('Could not save result', e);
-    }
-  };
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#ffffff', alignItems: 'center', padding: '40px 24px 30px', position: 'relative', overflow: 'hidden' }}>
