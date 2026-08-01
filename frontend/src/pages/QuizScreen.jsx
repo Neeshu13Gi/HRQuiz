@@ -19,6 +19,7 @@ const QuizScreen = () => {
   const wrongRef = useRef(0);
   const startTimeRef = useRef(null);
   const timerRef = useRef(null);
+  const finishedRef = useRef(false);
 
   const player = JSON.parse(localStorage.getItem('currentPlayer') || '{"name":"Player","empId":"000"}');
   const count = parseInt(localStorage.getItem('questionCount') || '10');
@@ -79,6 +80,9 @@ const QuizScreen = () => {
       setCurrentIdx(nextIdx);
       setTimeLeft(TIMER_SECONDS);
     } else {
+      if (finishedRef.current) return;
+      finishedRef.current = true;
+      
       // Quiz finished — save result
       const elapsed = Math.round((Date.now() - startTimeRef.current) / 1000);
       const mins = Math.floor(elapsed / 60);
