@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import API from '../api';
 import { playClick, playTick } from '../audio';
 
+
 const TIMER_SECONDS = 10;
 
 const QuizScreen = () => {
@@ -83,7 +84,8 @@ const QuizScreen = () => {
       if (finishedRef.current) return;
       finishedRef.current = true;
       
-      // Quiz finished — save result
+      // Quiz finished — save result to localStorage only
+      // (DB save happens once in QuizComplete via useEffect with ref guard)
       const elapsed = Math.round((Date.now() - startTimeRef.current) / 1000);
       const mins = Math.floor(elapsed / 60);
       const secs = elapsed % 60;
@@ -92,17 +94,10 @@ const QuizScreen = () => {
         wrongCount: wrongRef.current,
         time: `${mins}m ${secs}s`,
         total: questions.length,
-      };
-      localStorage.setItem('quizResult', JSON.stringify(result));
-
-      // Save to MongoDB
-      API.post('/api/results', {
         employeeName: player.name,
         employeeId: player.empId,
-        score: scoreRef.current,
-        totalQuestions: questions.length,
-        timeTaken: `${mins}m ${secs}s`,
-      }).catch(e => console.warn('Could not save to DB:', e));
+      };
+      localStorage.setItem('quizResult', JSON.stringify(result));
 
       navigate('/complete');
     }

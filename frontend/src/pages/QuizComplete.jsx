@@ -6,20 +6,30 @@ import { playSuccess, playError, speakText, playClick } from '../audio';
 const QuizComplete = () => {
   const navigate = useNavigate();
   const saved = useRef(false);
-  const result = JSON.parse(localStorage.getItem('quizResult') || '{"score":8,"wrongCount":2,"time":"4m 12s","total":10}');
+  const result = JSON.parse(localStorage.getItem('quizResult') || '{"score":8,"wrongCount":2,"time":"4m 12s","total":10,"employeeName":"Player","employeeId":"000"}');
   const player = JSON.parse(localStorage.getItem('currentPlayer') || '{"name":"Player","empId":"000"}');
 
   useEffect(() => {
-    if (!saved.current) {
-      saved.current = true;
-      
-      // Play sounds based on score
-      if (result.score > 0) {
-        playSuccess();
-      } else {
-        playError();
-      }
+    // Guard: run only once even in React StrictMode (which fires effects twice in dev)
+    if (saved.current) return;
+    saved.current = true;
+
+    // Play sounds based on score
+    if (result.score > 0) {
+      playSuccess();
+    } else {
+      playError();
     }
+
+    // Save result to MongoDB — exactly once
+    API.post('/api/results', {
+      employeeName: result.employeeName || player.name,
+      employeeId: result.employeeId || player.empId,
+      score: result.score,
+      totalQuestions: result.total,
+      timeTaken: result.time,
+    }).catch(e => console.warn('Could not save result to DB:', e));
+
   }, []);
 
   return (

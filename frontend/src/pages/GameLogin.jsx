@@ -66,7 +66,7 @@ const GameLogin = () => {
       flex: 1,
       display: 'flex',
       flexDirection: 'column',
-      background: '#ffffff',
+      background: 'var(--card)',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -82,6 +82,7 @@ const GameLogin = () => {
         }
         .animate-pop { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
         .animate-fade { animation: fadeInUp 0.5s ease-out both; }
+        .gl-input:focus { border-color: var(--blue) !important; }
       `}</style>
 
       {/* ── Back Button ── */}
@@ -91,13 +92,13 @@ const GameLogin = () => {
           position: 'absolute', top: '20px', left: '20px',
           width: '36px', height: '36px',
           borderRadius: '50%',
-          background: '#F0F0F5',
+          background: 'var(--back-btn-bg)',
           border: 'none',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer', zIndex: 2,
         }}
       >
-        <span className="msy" style={{ fontSize: '18px', color: '#4F46E5' }}>arrow_back</span>
+        <span className="msy" style={{ fontSize: '18px', color: 'var(--blue)' }}>arrow_back</span>
       </button>
 
       {/* ── Dot Grid decoration ── */}
@@ -121,10 +122,10 @@ const GameLogin = () => {
               <div style={{
                 width: '76px', height: '76px',
                 borderRadius: '50%',
-                background: '#F5F5FF',
+                background: 'var(--blue-light)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <span className="msy" style={{ fontSize: '36px', color: '#4F46E5' }}>sports_esports</span>
+                <span className="msy" style={{ fontSize: '36px', color: 'var(--blue)' }}>sports_esports</span>
               </div>
             </div>
 
@@ -132,7 +133,7 @@ const GameLogin = () => {
             <h1 style={{
               fontSize: '24px',
               fontWeight: '800',
-              color: '#111118',
+              color: 'var(--text)',
               marginBottom: '6px',
               letterSpacing: '-0.3px',
             }}>
@@ -142,7 +143,7 @@ const GameLogin = () => {
             {/* ── Subtitle ── */}
             <p style={{
               fontSize: '13px',
-              color: '#6E6E7A',
+              color: 'var(--sub)',
               marginBottom: '32px',
               textAlign: 'center',
             }}>
@@ -154,24 +155,24 @@ const GameLogin = () => {
               {/* Employee Name */}
               <div style={{ marginBottom: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: '600', color: '#111118' }}>Employee Name</label>
+                  <label style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text)' }}>Employee Name</label>
                 </div>
                 <div style={{ position: 'relative' }}>
-                  <span className="msy" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '18px', color: '#A0A0AB' }}>person</span>
+                  <span className="msy" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '18px', color: 'var(--label)' }}>person</span>
                   <input
                     type="text"
                     value={name}
                     onChange={e => setName(e.target.value)}
                     placeholder="Enter Name.."
                     required
+                    className="gl-input"
                     style={{
                       width: '100%', padding: '14px 16px 14px 44px',
-                      border: '1.5px solid #EAEAF0', borderRadius: '14px',
-                      fontSize: '14px', color: '#111118', outline: 'none', background: '#ffffff',
+                      border: '1.5px solid var(--border)', borderRadius: '14px',
+                      fontSize: '14px', color: 'var(--text)', outline: 'none',
+                      background: 'var(--input-bg)',
                       transition: 'border-color 0.2s',
                     }}
-                    onFocus={e => e.target.style.borderColor = '#4F46E5'}
-                    onBlur={e => e.target.style.borderColor = '#EAEAF0'}
                   />
                 </div>
               </div>
@@ -179,24 +180,24 @@ const GameLogin = () => {
               {/* Employee ID */}
               <div style={{ marginBottom: '36px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <label style={{ fontSize: '13px', fontWeight: '600', color: '#111118' }}>Employee ID</label>
+                  <label style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text)' }}>Employee ID</label>
                 </div>
                 <div style={{ position: 'relative' }}>
-                  <span className="msy" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '18px', color: '#A0A0AB' }}>id_card</span>
+                  <span className="msy" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '18px', color: 'var(--label)' }}>id_card</span>
                   <input
                     type="text"
                     value={empId}
                     onChange={e => setEmpId(e.target.value)}
                     placeholder="092"
                     required
+                    className="gl-input"
                     style={{
                       width: '100%', padding: '14px 16px 14px 44px',
-                      border: '1.5px solid #EAEAF0', borderRadius: '14px',
-                      fontSize: '14px', color: '#111118', outline: 'none', background: '#ffffff',
+                      border: '1.5px solid var(--border)', borderRadius: '14px',
+                      fontSize: '14px', color: 'var(--text)', outline: 'none',
+                      background: 'var(--input-bg)',
                       transition: 'border-color 0.2s',
                     }}
-                    onFocus={e => e.target.style.borderColor = '#4F46E5'}
-                    onBlur={e => e.target.style.borderColor = '#EAEAF0'}
                   />
                 </div>
               </div>
@@ -205,7 +206,7 @@ const GameLogin = () => {
               <button
                 type="submit"
                 style={{
-                  width: '100%', padding: '16px 24px', background: 'linear-gradient(90deg, #4F46E5, #3730A3)',
+                  width: '100%', padding: '16px 24px', background: 'var(--hero-grad)',
                   border: 'none', borderRadius: '16px', color: '#fff', fontSize: '16px', fontWeight: '700',
                   cursor: 'pointer', boxShadow: '0 8px 24px rgba(79,70,229,0.3)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
@@ -222,53 +223,53 @@ const GameLogin = () => {
             {/* Background elements */}
             <div style={{ position: 'absolute', top: '80px', left: '50%', transform: 'translateX(-50%)', width: '220px', height: '140px', pointerEvents: 'none' }}>
               <div style={{ position: 'absolute', top: '0px', left: '20px', width: '8px', height: '8px', background: '#FFC107', borderRadius: '50%' }}></div>
-              <div style={{ position: 'absolute', top: '60px', left: '-10px', width: '6px', height: '6px', background: '#C5CAE9', borderRadius: '50%' }}></div>
-              <div style={{ position: 'absolute', top: '-10px', right: '40px', width: '8px', height: '8px', background: '#C5CAE9', borderRadius: '50%' }}></div>
+              <div style={{ position: 'absolute', top: '60px', left: '-10px', width: '6px', height: '6px', background: 'var(--blue-mid)', borderRadius: '50%' }}></div>
+              <div style={{ position: 'absolute', top: '-10px', right: '40px', width: '8px', height: '8px', background: 'var(--blue-mid)', borderRadius: '50%' }}></div>
               <div style={{ position: 'absolute', top: '55px', right: '-5px', width: '8px', height: '8px', background: '#FFC107', borderRadius: '50%' }}></div>
             </div>
 
             {/* Central Icon */}
-            <div className="animate-pop" style={{ width: '110px', height: '110px', borderRadius: '50%', background: 'linear-gradient(135deg, #F0F0FF, #E0E0FF)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '10px', left: '-20px', color: '#C5CAE9' }}><Sparkle top="0" left="0" size={18} color="#C5CAE9" /></div>
-              <div style={{ position: 'absolute', bottom: '20px', right: '-25px', color: '#C5CAE9' }}><Sparkle top="0" left="0" size={24} color="#C5CAE9" /></div>
+            <div className="animate-pop" style={{ width: '110px', height: '110px', borderRadius: '50%', background: 'var(--blue-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', position: 'relative' }}>
+              <div style={{ position: 'absolute', top: '10px', left: '-20px', color: 'var(--blue-mid)' }}><Sparkle top="0" left="0" size={18} color="var(--blue-mid)" /></div>
+              <div style={{ position: 'absolute', bottom: '20px', right: '-25px', color: 'var(--blue-mid)' }}><Sparkle top="0" left="0" size={24} color="var(--blue-mid)" /></div>
               
-              <div style={{ width: '60px', height: '60px', background: '#4F46E5', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(-5deg)', boxShadow: '0 8px 16px rgba(79,70,229,0.3)' }}>
+              <div style={{ width: '60px', height: '60px', background: 'var(--blue)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(-5deg)', boxShadow: '0 8px 16px rgba(79,70,229,0.3)' }}>
                 <span style={{ fontSize: '36px', color: '#fff', fontWeight: '800', lineHeight: 1 }}>?</span>
               </div>
             </div>
 
-            <h1 style={{ fontSize: '28px', fontWeight: '800', color: '#111118', marginBottom: '8px' }}>
+            <h1 style={{ fontSize: '28px', fontWeight: '800', color: 'var(--text)', marginBottom: '8px' }}>
               Ready, {name.split(' ')[0]}?
             </h1>
-            <p style={{ fontSize: '14px', color: '#6E6E7A', marginBottom: '32px', fontWeight: '500' }}>
+            <p style={{ fontSize: '14px', color: 'var(--sub)', marginBottom: '32px', fontWeight: '500' }}>
               {localStorage.getItem('questionCount') || 10} Questions • 10s per question
             </p>
 
             {/* Player Details Card */}
-            <div style={{ width: '100%', background: '#fff', border: '1px solid #EAEAF0', borderRadius: '16px', padding: '16px 20px', marginBottom: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.03)' }}>
+            <div style={{ width: '100%', background: 'var(--qcard-bg)', border: '1px solid var(--border)', borderRadius: '16px', padding: '16px 20px', marginBottom: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
               {/* Row 1 */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#F5F5FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span className="msy" style={{ fontSize: '18px', color: '#4F46E5' }}>person</span>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--blue-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span className="msy" style={{ fontSize: '18px', color: 'var(--blue)' }}>person</span>
                   </div>
-                  <span style={{ fontSize: '14px', color: '#6E6E7A', fontWeight: '500' }}>Player</span>
+                  <span style={{ fontSize: '14px', color: 'var(--sub)', fontWeight: '500' }}>Player</span>
                 </div>
-                <span style={{ fontSize: '15px', fontWeight: '700', color: '#111118' }}>{name.split(' ')[0]}</span>
+                <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text)' }}>{name.split(' ')[0]}</span>
               </div>
               
               {/* Divider */}
-              <div style={{ height: '1px', background: '#F0F0F5', width: '100%', marginBottom: '16px' }}></div>
+              <div style={{ height: '1px', background: 'var(--border)', width: '100%', marginBottom: '16px' }}></div>
               
               {/* Row 2 */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#F5F5FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span className="msy" style={{ fontSize: '18px', color: '#4F46E5' }}>badge</span>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--blue-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span className="msy" style={{ fontSize: '18px', color: 'var(--blue)' }}>badge</span>
                   </div>
-                  <span style={{ fontSize: '14px', color: '#6E6E7A', fontWeight: '500' }}>Employee ID</span>
+                  <span style={{ fontSize: '14px', color: 'var(--sub)', fontWeight: '500' }}>Employee ID</span>
                 </div>
-                <span style={{ fontSize: '15px', fontWeight: '700', color: '#111118' }}>{empId}</span>
+                <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text)' }}>{empId}</span>
               </div>
             </div>
 
@@ -276,7 +277,7 @@ const GameLogin = () => {
             <button
               onClick={handleStartQuiz}
               style={{
-                width: '100%', padding: '18px 24px', background: 'linear-gradient(90deg, #4F46E5, #3730A3)',
+                width: '100%', padding: '18px 24px', background: 'var(--hero-grad)',
                 border: 'none', borderRadius: '16px', color: '#fff', fontSize: '17px', fontWeight: '700',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
                 boxShadow: '0 8px 24px rgba(79,70,229,0.35)', transition: 'transform 0.2s',
