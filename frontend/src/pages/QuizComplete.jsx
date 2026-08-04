@@ -14,6 +14,9 @@ const QuizComplete = () => {
     if (saved.current) return;
     saved.current = true;
 
+    // Prevent double-saving if user refreshes the page or uses the Back button
+    if (result.isSavedToDB) return;
+
     // Play sounds based on score
     if (result.score > 0) {
       playSuccess();
@@ -28,6 +31,10 @@ const QuizComplete = () => {
       score: result.score,
       totalQuestions: result.total,
       timeTaken: result.time,
+    }).then(() => {
+      // Mark as saved in local storage so it never saves again
+      const updatedResult = { ...result, isSavedToDB: true };
+      localStorage.setItem('quizResult', JSON.stringify(updatedResult));
     }).catch(e => console.warn('Could not save result to DB:', e));
 
   }, []);
