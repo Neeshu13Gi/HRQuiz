@@ -28,9 +28,12 @@
           const scaleY = winHeight / baseHeight;
           const scale = Math.min(scaleX, scaleY);
           
-          root.style.transform = 'scale(' + scale + ')';
+          // Use zoom instead of transform to avoid native <select> rendering bugs
+          root.style.transform = 'none';
+          document.body.style.zoom = scale;
         } else {
           root.style.transform = 'none';
+          document.body.style.zoom = 1;
         }
       }
       
