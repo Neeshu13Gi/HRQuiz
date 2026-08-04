@@ -8,6 +8,37 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      function scaleApp() {
+        const root = document.getElementById('root');
+        if (!root) return;
+        
+        // Base dimensions of the app
+        const baseWidth = 480;
+        const baseHeight = 853;
+        
+        // Window dimensions
+        const winWidth = window.innerWidth;
+        const winHeight = window.innerHeight;
+        
+        // If window is larger than base dimensions, scale it up
+        if (winWidth > baseWidth || winHeight > baseHeight) {
+          // Calculate scale to fit screen, prioritizing width, but not exceeding height
+          const scaleX = winWidth / baseWidth;
+          const scaleY = winHeight / baseHeight;
+          const scale = Math.min(scaleX, scaleY);
+          
+          root.style.transform = 'scale(' + scale + ')';
+        } else {
+          root.style.transform = 'none';
+        }
+      }
+      
+      window.addEventListener('resize', scaleApp);
+      window.addEventListener('load', scaleApp);
+      // Run once immediately in case DOM is ready
+      scaleApp();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
