@@ -18,7 +18,43 @@ mongoose.connect(MONGO_URI)
   .catch(err => console.error('Failed to connect to MongoDB', err));
 
 // API Routes
+const { OpenAI } = require('openai');
 
+// POST generate question with Grok AI
+app.post('/api/generate-question', async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
+
+    const openai = new OpenAI({
+      apiKey: process.env.GROK_API_KEY,
+      baseURL: "https://api.xai.com/v1",
+    });
+
+    const completion = await openai.chat.completions.create({
+      model: "grok-2-latest",
+      messages: [
+        {
+          role: "system",
+          content: "You are a quiz question generator. Generate a multiple-choice question based on the user's prompt. Return ONLY valid JSON matching this exact structure, with no markdown code blocks or other text: {\"title\": \"The question text?\", \"options\": [\"Option A\", \"Option B\", \"Option C\", \"Option D\"], \"correctAnswer\": \"The exact text of the correct option\"}"
+        },
+        {
+          role: "user",
+          content: prompt
+        }
+      ],
+    });
+
+    const aiContent = completion.choices[0].message.content.trim();
+    const jsonStr = aiContent.replace(/^```json\s*/i, '').replace(/\s*```$/i, '');
+    const questionObj = JSON.parse(jsonStr);
+
+    res.json(questionObj);
+  } catch (error) {
+    console.error('AI Generation Error:', error);
+    res.status(500).json({ error: 'Failed to generate question from AI' });
+  }
+});
 // GET questions by category and limit
 app.get('/api/questions', async (req, res) => {
   try {
