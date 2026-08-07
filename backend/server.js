@@ -20,19 +20,19 @@ mongoose.connect(MONGO_URI)
 // API Routes
 const { OpenAI } = require('openai');
 
-// POST generate question with Grok AI
+// POST generate question with Groq AI
 app.post('/api/generate-question', async (req, res) => {
   try {
     const { prompt } = req.body;
     if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
 
     const openai = new OpenAI({
-      apiKey: process.env.GROK_API_KEY,
-      baseURL: "https://api.xai.com/v1",
+      apiKey: process.env.GROQ_API_KEY, // Using Groq API Key
+      baseURL: "https://api.groq.com/openai/v1",
     });
 
     const completion = await openai.chat.completions.create({
-      model: "grok-2-latest",
+      model: "llama3-8b-8192", // Fast Groq model
       messages: [
         {
           role: "system",
@@ -52,7 +52,10 @@ app.post('/api/generate-question', async (req, res) => {
     res.json(questionObj);
   } catch (error) {
     console.error('AI Generation Error:', error);
-    res.status(500).json({ error: 'Failed to generate question from AI' });
+    res.status(500).json({ 
+      error: 'Failed to generate question from AI', 
+      details: error.message 
+    });
   }
 });
 // GET questions by category and limit

@@ -118,7 +118,8 @@ const QuestionList = () => {
       setShowAIModal(false);
       setShowModal(true);
     } catch (e) {
-      setError('AI Generation Failed. Please try again.');
+      const errMsg = e.response?.data?.details || 'AI Generation Failed. Please try again.';
+      setError(`Error: ${errMsg}`);
     }
     setIsGenerating(false);
   };
@@ -274,7 +275,7 @@ const QuestionList = () => {
 
             <button onClick={handleGenerate} disabled={isGenerating}
               style={{ width: '100%', padding: '15px', background: isGenerating ? 'var(--blue-mid)' : 'var(--hero-grad)', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '15px', fontWeight: '700', cursor: isGenerating ? 'not-allowed' : 'pointer', boxShadow: '0 4px 14px rgba(79,70,229,0.3)' }}>
-              {isGenerating ? 'Generating...' : 'Generate with Grok AI'}
+              {isGenerating ? 'Generating...' : 'Generate with Groq AI'}
             </button>
           </div>
         </div>
