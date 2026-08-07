@@ -118,7 +118,7 @@ const QuestionList = () => {
       setShowAIModal(false);
       setShowModal(true);
     } catch (e) {
-      const errMsg = e.response?.data?.details || 'AI Generation Failed. Please try again.';
+      const errMsg = e.response?.data?.details || e.response?.data?.error || e.message || 'AI Generation Failed. Please try again.';
       setError(`Error: ${errMsg}`);
     }
     setIsGenerating(false);

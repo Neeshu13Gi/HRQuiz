@@ -18,7 +18,7 @@ mongoose.connect(MONGO_URI)
   .catch(err => console.error('Failed to connect to MongoDB', err));
 
 // API Routes
-const { OpenAI } = require('openai');
+const Groq = require('groq-sdk');
 
 // POST generate question with Groq AI
 app.post('/api/generate-question', async (req, res) => {
@@ -26,13 +26,13 @@ app.post('/api/generate-question', async (req, res) => {
     const { prompt } = req.body;
     if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
 
-    const openai = new OpenAI({
-      apiKey: process.env.GROQ_API_KEY, // Using Groq API Key
-      baseURL: "https://api.groq.com/openai/v1",
+    const groq = new Groq({
+      apiKey: process.env.GROQ_API_KEY, 
     });
 
-    const completion = await openai.chat.completions.create({
-      model: "llama3-8b-8192", // Fast Groq model
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant", // Updated Fast Groq model
+      response_format: { type: "json_object" },
       messages: [
         {
           role: "system",
@@ -46,8 +46,13 @@ app.post('/api/generate-question', async (req, res) => {
     });
 
     const aiContent = completion.choices[0].message.content.trim();
-    const jsonStr = aiContent.replace(/^```json\s*/i, '').replace(/\s*```$/i, '');
-    const questionObj = JSON.parse(jsonStr);
+    // Extract JSON using regex in case the model returns extra conversational text
+    const jsonMatch = aiContent.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      throw new Error(`AI returned invalid format: ${aiContent.substring(0, 50)}...`);
+    }
+    
+    const questionObj = JSON.parse(jsonMatch[0]);
 
     res.json(questionObj);
   } catch (error) {
